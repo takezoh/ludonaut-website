@@ -24,21 +24,16 @@ python3 -m unittest discover -s tests -v
 
 These checks validate markup, exact copy, asset boundaries, and the absence of scripts, forms, template syntax, or apparent secrets. They do not replace visual browser testing.
 
-## Cloudflare Workers with Wrangler
+## GitHub Pages
 
-`wrangler.jsonc` configures a static-assets-only Worker named `ludonaut-website`.
+The publishing source is `main` / `docs`, with the custom domain `ludonaut.ai`.
 
-- Public assets: `site` only. No Worker script, bindings, or secrets.
-- Custom domain: `ludonaut.ai`.
-- workers.dev and preview URLs are disabled.
-- No build command is required.
-- Validate the intended Cloudflare account and existing DNS before deployment.
+- `docs/index.html` is a byte-for-byte copy of `site/index.html`.
+- `docs/.nojekyll` disables Jekyll processing.
+- `docs/CNAME` declares the intended custom domain.
+- Only `docs` is published; tooling, tests, and the repository README are excluded from the website.
+- Keep the two HTML files identical when making changes.
 
-Using the official Wrangler CLI, after completing authorized authentication:
+Publishing requires GitHub Pages to be enabled for this repository and the domain's DNS to point to GitHub Pages. DNS changes preserve unrelated records. Verify HTTPS and the delivered HTML after deployment; committed configuration alone does not mean the site is live.
 
-```sh
-npx --yes wrangler@4.158.0 deploy --dry-run
-CLOUDFLARE_ACCOUNT_ID="<verified account ID>" npx --yes wrangler@4.158.0 deploy
-```
-
-Keep credentials outside the repository. Do not publish tooling or private workspace files. Preserve unrelated DNS and services. A successful dry run does not mean the site is live; verify HTTPS and the delivered content after deployment. Repository commits do not automatically deploy unless a separate Cloudflare Git integration is configured.
+The earlier `wrangler.jsonc` is retained only as unused deployment history. Wrangler authentication and Cloudflare Workers deployment are not part of the active GitHub Pages setup.
