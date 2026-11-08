@@ -44,7 +44,7 @@ class SiteTests(unittest.TestCase):
         self.assertEqual(self.page.body_text, [
             "Ludonaut", "Charting the unplayed",
             "A platform for AI that sees and plays games.",
-            "Automate gameplay. Play together with AI.", "Not yet.",
+            "Automate gameplay. Play together with AI.", "Built. Under wraps.",
         ])
 
     def test_static_and_private_data_free(self):
