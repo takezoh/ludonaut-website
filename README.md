@@ -24,12 +24,21 @@ python3 -m unittest discover -s tests -v
 
 These checks validate markup, exact copy, asset boundaries, and the absence of scripts, forms, template syntax, or apparent secrets. They do not replace visual browser testing.
 
-## Cloudflare Pages
+## Cloudflare Workers with Wrangler
 
-- Production branch: `main`.
-- Static output directory: `site`.
+`wrangler.jsonc` configures a static-assets-only Worker named `ludonaut-website`.
+
+- Public assets: `site` only. No Worker script, bindings, or secrets.
+- Custom domain: `ludonaut.ai`.
+- workers.dev and preview URLs are disabled.
 - No build command is required.
-- Deploy only files in `site`, never this repository's tooling or local files.
-- The intended custom domain is `ludonaut.ai`.
+- Validate the intended Cloudflare account and existing DNS before deployment.
 
-Domain registration alone does not mean a deployment is live. Preserve existing unrelated DNS records when attaching the domain. Repository commits do not automatically deploy unless a separate Cloudflare Git integration is configured.
+Using the official Wrangler CLI, after completing authorized authentication:
+
+```sh
+npx --yes wrangler@4.158.0 deploy --dry-run
+CLOUDFLARE_ACCOUNT_ID="<verified account ID>" npx --yes wrangler@4.158.0 deploy
+```
+
+Keep credentials outside the repository. Do not publish tooling or private workspace files. Preserve unrelated DNS and services. A successful dry run does not mean the site is live; verify HTTPS and the delivered content after deployment. Repository commits do not automatically deploy unless a separate Cloudflare Git integration is configured.

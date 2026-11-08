@@ -1,0 +1,15 @@
+{
+  // Static-assets-only Worker for the Ludonaut teaser page.
+  // Deploys only ./site; no Worker script, no bindings, no secrets.
+  "name": "ludonaut-website",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./site"
+  },
+  // Serve only on the custom domain; no workers.dev or preview URLs.
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "ludonaut.ai", "custom_domain": true }
+  ]
+}
